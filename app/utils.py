@@ -18,7 +18,7 @@ def is_time_between(start_time_str, end_time_str):
 message_exists = lambda message: database.message_exists(message.lead_id, message.id)
 manager_intervented = lambda setting, message: setting.manager_intervented_active and database.manager_intervened(
     message.lead_id,
-    message.mesages_history)
+    message.messages_history)
 
 voice_and_detection_inactive = lambda setting, message: setting.voice_detection is False and ".m4a" in message.answer
 is_in_working_time = lambda setting: (not setting.is_date_work_active) or (
