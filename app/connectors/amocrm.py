@@ -17,7 +17,6 @@ async def read_messages(setting, session):
     answer = await connector.send_request(data, url)
     if answer == '-':
         return []
-    for m in answer:
 
     resp = [Message(**m) for m in answer]
     return resp
