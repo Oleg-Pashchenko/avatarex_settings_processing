@@ -14,7 +14,6 @@ async def message_processing(setting: Setting, message: Message):
             return
 
         database.add_message(message, setting)
-        print('finished')
 
     except Exception as e:
         print('message e', e)
