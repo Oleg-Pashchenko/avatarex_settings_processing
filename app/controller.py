@@ -13,7 +13,7 @@ async def message_processing(setting: Setting, message: Message):
                 voice_and_detection_inactive(setting, message):
             return
 
-        database.add_message(message)
+        database.add_message(message, setting)
         print('finished')
 
     except Exception as e:
@@ -21,19 +21,13 @@ async def message_processing(setting: Setting, message: Message):
 
 
 async def setting_processing(setting: Setting):
-    start = time.time()
     if not is_in_working_time(setting):
         return
-
     session: Session = database.get_session(setting.host)
     if not session:
         return
-
     messages: list[Message] = await amocrm.read_messages(setting, session)
-    if len(messages) > 0:
-        print(messages)
     [await message_processing(setting, message) for message in messages]
-    print(round(time.time() - start, 2))
 
 
 async def run():
@@ -43,4 +37,4 @@ async def run():
         for setting in settings:
             asyncio.create_task(setting_processing(setting))
         print(round(time.time() - start_time, 2))
-        await asyncio.sleep(3000)
+        await asyncio.sleep(5)

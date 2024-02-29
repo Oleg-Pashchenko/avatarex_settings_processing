@@ -103,7 +103,7 @@ def manager_intervened(lead_id: int, messages_history: list) -> bool:
         return False
 
 
-def add_message(message: Message):
+def add_message(message: Message, setting: Setting):
     query = "INSERT INTO messages (message_id, text, lead_id, is_bot, is_q) VALUES (%s, %s, %s, %s, %s)"
     execute_db_query({
         'host': os.getenv('DB_HOST'),
@@ -112,7 +112,7 @@ def add_message(message: Message):
         'user': os.getenv('DB_USER')
     },
         query,
-        (message.id, message.answer, message.lead_id, False, False))
+        (message.id, message.answer, message.lead_id, False, False, True, setting.host, message.messages_history))
 
 
 def get_session(host: str) -> Session:
