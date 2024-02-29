@@ -104,6 +104,10 @@ def manager_intervened(lead_id: int, messages_history: list) -> bool:
 
 
 def add_message(message: Message, setting: Setting):
+    try:
+        message_history = message.messages_history
+    except:
+        message_history = {'message_list': []}
     query = "INSERT INTO messages (message_id, text, lead_id, is_bot, is_q, is_new, host, messages_history) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
     print(message)
     execute_db_query({
@@ -113,7 +117,7 @@ def add_message(message: Message, setting: Setting):
         'user': os.getenv('DB_USER')
     },
         query,
-        (message.id, message.answer, message.lead_id, False, False, True, setting.host, message.messages_history))
+        (message.id, message.answer, message.lead_id, False, False, True, setting.host, message_history))
 
 
 def get_session(host: str) -> Session:
