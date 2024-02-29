@@ -104,7 +104,8 @@ def manager_intervened(lead_id: int, messages_history: list) -> bool:
 
 
 def add_message(message: Message, setting: Setting):
-    query = "INSERT INTO messages (message_id, text, lead_id, is_bot, is_q) VALUES (%s, %s, %s, %s, %s)"
+    query = "INSERT INTO messages (message_id, text, lead_id, is_bot, is_q, is_new, host, messages_history) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+    print(message)
     execute_db_query({
         'host': os.getenv('DB_HOST'),
         'password': os.getenv('DB_PASSWORD'),
